@@ -5,6 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConcurrentQueue {
+    public static final int NElems = 20;
     final Lock lck = new ReentrantLock();
     final Condition needSpace = lck.newCondition();
     final Condition needElem = lck.newCondition();
@@ -50,4 +51,40 @@ public class ConcurrentQueue {
         }
     }
 
+    public static void main(String[] args) {
+        final ConcurrentQueue cq = new ConcurrentQueue(10);
+        final Runnable pusher = new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < NElems; ++i) {
+                    try {
+                        cq.push(i);
+                    } catch (InterruptedException e) {
+                        return;
+                    }
+                }
+            }
+        };
+        final Runnable popper = new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < NElems; ++i) {
+                    try {
+                        final int elem = cq.pop();
+                        System.out.println(elem);
+                    } catch (InterruptedException e) {
+                        return;
+                    }
+                }
+            }
+        };
+
+        final Thread pusherThread = new Thread(pusher);
+        final Thread popperThread = new Thread(popper);
+
+        popperThread.start();
+        pusherThread.start();
+
+        System.out.println("Done");
+    }
 }
