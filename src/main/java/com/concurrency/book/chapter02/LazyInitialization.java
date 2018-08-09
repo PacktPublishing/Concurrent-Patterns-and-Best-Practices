@@ -14,4 +14,9 @@ public class LazyInitialization {
     public static LazyInitialization getInstance() {
         return LazyHolder.INSTANCE;
     }
+
+    public static void main(String[] args) {
+        LazyInitialization lazyInitialization = LazyInitialization.getInstance();
+        System.out.println(lazyInitialization);
+    }
 }

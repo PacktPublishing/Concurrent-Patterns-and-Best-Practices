@@ -10,11 +10,6 @@ public class FinalVisibility {
         b = 1;
     }
 
-    public static void main(String[] args) {
-        extractVal();
-        getVal();
-    }
-
     private static void extractVal() {
         if (fv != null) {
             int aa = fv.a;
@@ -25,5 +20,23 @@ public class FinalVisibility {
     public static FinalVisibility getVal() {
         fv = new FinalVisibility();
         return fv;
+    }
+
+    public static void main(String[] args) {
+
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                FinalVisibility.extractVal();
+                final FinalVisibility v = FinalVisibility.getVal();
+                System.out.println("a = " + v.a + " b = " + v.b); 
+            }
+        };
+
+        Thread t1 = new Thread(runnable);
+        Thread t2 = new Thread(runnable);
+
+        t1.start();
+        t2.start();
     }
 }
