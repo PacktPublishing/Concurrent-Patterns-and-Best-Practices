@@ -1,15 +1,17 @@
 package com.concurrency.book.chapter03;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class FairReadWriteLock {
-    int readersIn, readersOut;
-    boolean writer;
-    Lock lck;
-    Condition condition;
-    RWLock rdLock, wrLock;
+    private int readersIn, readersOut;
+    private boolean writer;
+    private Lock lck;
+    private Condition condition;
+    private RWLock rdLock, wrLock;
 
     public FairReadWriteLock() {
         readersIn = readersOut = 0;
@@ -86,7 +88,62 @@ public class FairReadWriteLock {
             }
 
         }
+    }
 
+    private static void sleep(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        final Queue<Integer> queue = new LinkedList<>();
+        final FairReadWriteLock lock = new FairReadWriteLock();
+
+        Thread producer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final RWLock wrLock = lock.getWrLock();
+                for (int i = 0; i < 50; ++i) {
+                    System.out.println("Putting elem " + i);
+                    try {
+                        wrLock.lock();
+                        queue.add(i);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } finally {
+                        wrLock.unlock();
+                    }
+                    sleep(300);
+                }
+            }
+        });
+
+        Thread consumer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final RWLock rdLock = lock.getRdLock();
+                for (int i = 0; i < 50; ++i) {
+                    System.out.println("Got elem " + i);
+                    try {
+                        rdLock.lock();
+                        if (!queue.isEmpty()) {
+                            System.out.println(queue.poll());
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } finally {
+                        rdLock.unlock();
+                    }
+                    sleep(150);
+                }
+            }
+        });
+
+        producer.start();
+        consumer.start();
     }
 
 }
