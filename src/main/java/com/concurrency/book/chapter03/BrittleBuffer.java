@@ -16,4 +16,28 @@ public class BrittleBuffer extends Buffer {
             throw new BufEmptyException();
         return getElem();
     }
+
+    public static void main(String[] args) {
+        final BrittleBuffer buffer = new BrittleBuffer(5);
+        Thread producer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for( int i = 0; i < 50; ++ i) {
+                    System.out.println("putting elem " + i);
+                    buffer.put(i);
+                }
+            }
+        });
+        Thread consumer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for( int i = 0; i < 50; ++ i) {
+                    System.out.println("Getting elem " + buffer.get());
+                }
+            }
+        });
+
+        producer.start();
+        consumer.start();
+    }
 }

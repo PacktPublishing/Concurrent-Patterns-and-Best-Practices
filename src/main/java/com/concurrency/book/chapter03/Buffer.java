@@ -7,7 +7,7 @@ public abstract class Buffer {
     private int cnt;
 
     protected Buffer(int capacity) {
-        this.buf = (Integer[]) new Object[capacity];
+        this.buf = new Integer[capacity];
         this.tail = 0;
         this.head = 0;
         this.cnt = 0;
