@@ -39,4 +39,43 @@ public class Semaphore {
         }
     }
 
+    private static void sleep(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        final Semaphore semaphore = new Semaphore(3);
+
+        Thread producer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Integer i = 0; i < 5; ++i) {
+                    try {
+                        semaphore.acquire();
+                        System.out.println("Acquired " + i);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        Thread consumer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Integer i = 0; i < 5; ++i) {
+                    semaphore.release();
+                    System.out.println("Released " + i);
+                }
+            }
+        });
+
+        producer.start();
+        sleep(300);
+        consumer.start();
+    }
 }

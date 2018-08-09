@@ -1,5 +1,6 @@
 package com.concurrency.book.chapter03;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class RWMap<K, V> {
@@ -56,5 +57,50 @@ public class RWMap<K, V> {
         } finally {
            w.unlock();
         }
+    }
+
+    private static void sleep(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        final RWMap<String, Integer> rwMap = new RWMap<>(new HashMap<>());
+
+        Thread producer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Integer i = 0; i < 50; ++i) {
+                    try {
+                        System.out.println("Putting in " + i);
+                        rwMap.put(i.toString(), i);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    sleep(150);
+                }
+            }
+        });
+
+        Thread consumer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (Integer i = 0; i < 50; ++i) {
+                    try {
+                        System.out.println("Got elem " + rwMap.get(i.toString()));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    sleep(350);
+                }
+            }
+        });
+
+        producer.start();
+        sleep(150);
+        consumer.start();
     }
 }
