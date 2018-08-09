@@ -1,4 +1,4 @@
-package com.concurrency.book.chapter04;
+package com.concurrency.book.chapter04.mypool;
 
 import java.util.ArrayList;
 import java.util.List;

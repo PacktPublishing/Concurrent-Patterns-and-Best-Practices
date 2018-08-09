@@ -1,13 +1,12 @@
-package com.concurrency.book.chapter04;
+package com.concurrency.book.chapter04.mypool;
+
+import com.concurrency.book.chapter04.mypool.MyThreadPool;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Stream;
 
