@@ -1,5 +1,7 @@
 package com.concurrency.book.chapter05;
 
+import com.concurrency.book.Utils.ThreadUtils;
+
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -81,4 +83,43 @@ public class ThreadSafeQueue<T> {
         return result;
     }
 
+    public static void main(String[] args) {
+        final ThreadSafeQueue<Integer> cq = new ThreadSafeQueue(4);
+        int nElems = 50;
+
+        final Thread enqThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < nElems; ++i) {
+                    try {
+                        cq.enq(i);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    ThreadUtils.sleep(10);
+                }
+            }
+        });
+        final Thread deqThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < nElems; ++i) {
+                    final int elem;
+                    try {
+                        elem = cq.deq();
+                        System.out.println(elem);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    ThreadUtils.sleep(20);
+                }
+            }
+        });
+
+        enqThread.start();
+        ThreadUtils.sleep(100);
+        deqThread.start();
+
+        System.out.println("Done");
+    }
 }

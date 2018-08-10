@@ -63,7 +63,7 @@ public class BigLockHashSet<T> extends HashSet<T> {
     }
 
     public static void main(String[] args) {
-        final BigLockHashSet<Integer> hashSet = new BigLockHashSet<>(3);
+        final HashSet<Integer> hashSet = new BigLockHashSet<>(3);
 
         final Thread pushThread = new Thread(new Runnable() {
             @Override

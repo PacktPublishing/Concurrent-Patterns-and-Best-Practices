@@ -1,5 +1,7 @@
 package com.concurrency.book.chapter05;
 
+import com.concurrency.book.Utils.ThreadUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -66,4 +68,32 @@ public class LockStripedHashSet<T> extends HashSet<T> {
         return false;
     }
 
+    public static void main(String[] args) {
+        final HashSet<Integer> hashSet = new LockStripedHashSet<>(3);
+
+        final Thread pushThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 50; ++i) {
+                    hashSet.add(i);
+                    ThreadUtils.sleep(10);
+                }
+            }
+        });
+        final Thread popThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 50; ++i) {
+                    if (hashSet.contains(i)) {
+                        System.out.println("Contains " + i);
+                    }
+                    ThreadUtils.sleep(10);
+                }
+            }
+        });
+
+        pushThread.start();
+        ThreadUtils.sleep(5);
+        popThread.start();
+    }
 }
