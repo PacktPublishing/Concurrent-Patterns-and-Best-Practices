@@ -1,5 +1,7 @@
 package com.concurrency.book.chapter05;
 
+import com.concurrency.book.Utils.ThreadUtils;
+
 import java.util.concurrent.atomic.AtomicReference;
 
 public class LockFreeStack<T> {
@@ -35,5 +37,31 @@ public class LockFreeStack<T> {
         }
     }
 
+    public static void main(String[] args) {
+        final LockFreeStack<Integer> stack = new LockFreeStack<>();
 
+        final Thread pushThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 50; ++i) {
+                    stack.push(i);
+                    ThreadUtils.sleep(10);
+                }
+            }
+        });
+        final Thread popThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 50; ++i) {
+                    final Integer elem = stack.pop();
+                    System.out.println("popped " + elem);
+                    ThreadUtils.sleep(10);
+                }
+            }
+        });
+
+        pushThread.start();
+        ThreadUtils.sleep(5);
+        popThread.start();
+    }
 }
