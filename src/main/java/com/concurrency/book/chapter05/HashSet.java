@@ -12,6 +12,7 @@ public abstract class HashSet<T> {
     protected AtomicBoolean needsToResize;
 
     public HashSet(int capacity) {
+        table = new List[capacity];
         size = new AtomicInteger(0);
         needsToResize = new AtomicBoolean(false);
         for (int i = 0; i < capacity; ++i) {
