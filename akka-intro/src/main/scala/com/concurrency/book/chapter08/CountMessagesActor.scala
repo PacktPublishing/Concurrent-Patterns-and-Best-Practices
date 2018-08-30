@@ -2,7 +2,9 @@ package com.concurrency.book.chapter08
 
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 
-class CountMessagesActor( var cnt: Integer ) extends Actor with ActorLogging {
+class CountMessagesActor() extends Actor with ActorLogging {
+
+  var cnt = 0
 
   override def receive: PartialFunction[Any, Unit] = {
     case s: String =>
@@ -16,11 +18,11 @@ class CountMessagesActor( var cnt: Integer ) extends Actor with ActorLogging {
 }
 
 object CountMessagesActor extends App {
-  def props( cnt: Int ) = Props(new HandlesOnlyFiveMessages())
+  def props() = Props(new CountMessagesActor())
 
   val actorSystem = ActorSystem("MyActorSystem")
 
-  val actor = actorSystem.actorOf(CountMessagesActor.props(1), name = "CountMessagesActor")
+  val actor = actorSystem.actorOf(CountMessagesActor.props(), name = "CountMessagesActor")
 
   actor ! "Hi"
   actor ! 34
@@ -30,6 +32,8 @@ object CountMessagesActor extends App {
   actor ! Msg(3)
 
   actor ! 35
+
+  Thread.sleep(1000)
 
   actorSystem.terminate()
 }

@@ -21,7 +21,7 @@ class Make3From1Actor( actor: ActorRef) extends Actor with ActorLogging {
 object MultipleActorsHittingOneActor extends App {
   val actorSystem = ActorSystem("MyActorSystem")
 
-  val actor = actorSystem.actorOf(CountMessagesActor.props(0), name = "CountMessagesActor")
+  val actor = actorSystem.actorOf(CountMessagesActor.props(), name = "CountMessagesActor")
 
   def props5From1() = Props(new Make5From1Actor(actor))
   def props3From1() = Props(new Make3From1Actor(actor))
