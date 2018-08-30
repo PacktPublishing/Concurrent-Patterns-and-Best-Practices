@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="default"
+		module="akka-intro-build"
+		revision="0.1-SNAPSHOT"
+		extra-scalaVersion="2.10"
+		extra-sbtVersion="0.13"
+		conf="compile"
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
+		date="20180813101912"/>
+	<dependencies>
+		<module organisation="io.spray" name="sbt-revolver">
+			<revision name="0.9.1" status="release" pubdate="20171025121045" resolver="sbt-plugin-releases" artresolver="sbt-plugin-releases" homepage="http://github.com/spray/sbt-revolver" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="true" searched="true" default="false" conf="compile, default(compile)" position="1">
+				<license name="Apache License 2.0" url="https://github.com/spray/sbt-revolver/raw/master/LICENSE"/>
+				<metadata-artifact status="successful" details="" size="1636" time="5652" location="/home/atul/.ivy2/cache/scala_2.10/sbt_0.13/io.spray/sbt-revolver/ivy-0.9.1.xml" searched="true" original-local-location="/home/atul/.ivy2/cache/scala_2.10/sbt_0.13/io.spray/sbt-revolver/ivy-0.9.1.xml.original" origin-is-local="false" origin-location="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/io.spray/sbt-revolver/scala_2.10/sbt_0.13/0.9.1/ivys/ivy.xml"/>
+				<caller organisation="default" name="akka-intro-build" conf="compile" rev="0.9.1" rev-constraint-default="0.9.1" rev-constraint-dynamic="0.9.1" callerrev="0.1-SNAPSHOT" extra-scalaVersion="2.10" extra-sbtVersion="0.13"/>
+				<artifacts>
+					<artifact name="sbt-revolver" type="jar" ext="jar" status="successful" details="" size="112796" time="7843" location="/home/atul/.ivy2/cache/scala_2.10/sbt_0.13/io.spray/sbt-revolver/jars/sbt-revolver-0.9.1.jar">
+						<origin-location is-local="false" location="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/io.spray/sbt-revolver/scala_2.10/sbt_0.13/0.9.1/jars/sbt-revolver.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-sbt" name="global-plugins">
+			<revision name="0.0" status="integration" pubdate="20180813101910" resolver="inter-project" artresolver="inter-project" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="false" searched="false" default="false" conf="compile, default(compile)" position="0">
+				<metadata-artifact status="failed" details="" size="0" time="0" searched="false"/>
+				<caller organisation="default" name="akka-intro-build" conf="compile" rev="0.0" rev-constraint-default="0.0" rev-constraint-dynamic="0.0" callerrev="0.1-SNAPSHOT" extra-scalaVersion="2.10" extra-sbtVersion="0.13"/>
+				<artifacts>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>
