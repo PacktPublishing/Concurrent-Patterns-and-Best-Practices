@@ -55,10 +55,24 @@ object ActorToActorAsk extends App {
 
   (actorNames zip actors) foreach { case (name, actor) => actor ! name }
 
-//  Thread.sleep(4000)
-//
-//  actorSystem.terminate()
-
 }
 
+object ClosesOver extends App {
+  class Foo {
+    def m1( fun: ( Int ) => Unit, id: Int ) {
+      fun(id)
+    }
+  }
+
+  var x = 1
+
+  def addUp( num: Int ) = println(num + x)
+
+  val foo = new Foo
+  foo.m1(addUp, 1)
+
+  x = 2
+
+  foo.m1(addUp, 1)
+}
 
