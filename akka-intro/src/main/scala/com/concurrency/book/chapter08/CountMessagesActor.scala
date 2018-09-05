@@ -2,7 +2,7 @@ package com.concurrency.book.chapter08
 
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 
-class CountMessagesActor() extends Actor with ActorLogging {
+class CountMessagesActor extends Actor with ActorLogging {
 
   var cnt = 0
 
