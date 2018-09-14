@@ -1,5 +1,7 @@
 package com.concurrency.book.chapter05;
 
+import com.concurrency.book.Utils.ThreadUtils;
+
 public class TryThreadLocal {
     public static class ThrLocalRunnable implements Runnable {
 
@@ -22,11 +24,7 @@ public class TryThreadLocal {
 
                 threadLocal.set(v + 1);
 
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    // nothing
-                }
+                ThreadUtils.sleep(2000);
             }
         }
     }

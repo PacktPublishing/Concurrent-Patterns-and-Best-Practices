@@ -1,5 +1,7 @@
 package com.concurrency.book.chapter04;
 
+import com.concurrency.book.Utils.ThreadUtils;
+
 import java.util.Deque;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedDeque;
@@ -43,14 +45,6 @@ public class TaskStealingThread extends Thread {
         }
     }
 
-    private static void sleep(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void main(String[] args) {
         ConcurrentLinkedDeque[] taskQueue = new ConcurrentLinkedDeque[2];
         for (int i = 0; i < taskQueue.length; ++i) {
@@ -70,7 +64,7 @@ public class TaskStealingThread extends Thread {
                 @Override
                 public void run() {
                     System.out.println("Thread " + Thread.currentThread().getName());
-                    sleep(duration * 10);
+                    ThreadUtils.sleep(duration * 10);
                 }
             };
             final int queueIndex = random.nextInt(taskQueue.length);
