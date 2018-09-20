@@ -10,7 +10,7 @@ import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 object Actor1 {
-  def props(workActor: ActorRef) = Props(new Actor1(workActor))
+  def props(workActor: ActorRef) = Props(new TellActor1(workActor))
 }
 
 class Actor1(workActor: ActorRef) extends Actor with ActorLogging {
@@ -46,12 +46,12 @@ class Actor2 extends Actor with ActorLogging {
 object ActorToActorAsk extends App {
   val actorSystem = ActorSystem("MyActorSystem")
 
-  val workactor = actorSystem.actorOf(Props[Actor2], name = "workactor")
+  val workactor = actorSystem.actorOf(Props[TellActor2], name = "workactor")
 
-  val actor = actorSystem.actorOf(Actor1.props(workactor), name = s"actor")
+  val actor = actorSystem.actorOf(TellActor1.props(workactor), name = s"actor")
 
   val actorNames = (0 to 50).map(x => s"actor${x}")
-  val actors = actorNames.map(actorName => actorSystem.actorOf(Actor1.props(workactor), name = actorName))
+  val actors = actorNames.map(actorName => actorSystem.actorOf(TellActor1.props(workactor), name = actorName))
 
   (actorNames zip actors) foreach { case (name, actor) => actor ! name }
 
