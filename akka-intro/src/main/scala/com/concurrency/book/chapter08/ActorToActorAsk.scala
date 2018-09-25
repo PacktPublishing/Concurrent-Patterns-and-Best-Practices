@@ -55,6 +55,9 @@ object ActorToActorAsk extends App {
 
   (actorNames zip actors) foreach { case (name, actor) => actor ! name }
 
+  Thread.sleep(10000)
+
+  actorSystem.terminate()
 }
 
 object ClosesOver extends App {
