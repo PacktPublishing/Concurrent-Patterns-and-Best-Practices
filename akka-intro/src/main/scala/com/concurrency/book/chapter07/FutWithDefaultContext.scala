@@ -3,7 +3,7 @@ package com.concurrency.book.chapter07
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object FutWithDefaultContext extends App {
+object FutureWithDefaultContext extends App {
 
   Future {
     Thread.sleep(2000)

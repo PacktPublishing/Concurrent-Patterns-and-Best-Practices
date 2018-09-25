@@ -13,15 +13,15 @@
 
     val start = System.currentTimeMillis()
 
-//    val f1 = longRunningMethod(2)
-//    val f2 = longRunningMethod(2)
-//    val f3 = longRunningMethod(2)
-//
-//    val f4: Future[Int] = for {
-//      x <- f1
-//      y <- f2
-//      z <- f3
-//    } yield ( x + y + z )
+    val f1 = longRunningMethod(2)
+    val f2 = longRunningMethod(2)
+    val f3 = longRunningMethod(2)
+
+    val f4: Future[Int] = for {
+      x <- f1
+      y <- f2
+      z <- f3
+    } yield ( x + y + z )
 
     // Don't use this version...
 //    val f4: Future[Int] = for {
@@ -30,8 +30,9 @@
 //      z <- longRunningMethod(2)
 //    } yield ( x + y + z )
 
-    val f4 = longRunningMethod(2).flatMap(x => longRunningMethod(2).
-      flatMap(y => longRunningMethod(2).map(z => x + y + z)))
+    // Or this
+//    val f4 = longRunningMethod(2).flatMap(x => longRunningMethod(2).
+//      flatMap(y => longRunningMethod(2).map(z => x + y + z)))
 
     val result = Await.result( f4, 4 second)
 
