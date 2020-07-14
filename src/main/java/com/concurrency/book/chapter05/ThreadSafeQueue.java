@@ -53,7 +53,7 @@ public class ThreadSafeQueue<T> {
             try {
                 notEmptyCond.signalAll();
             } finally {
-                deqLock.lock();
+                deqLock.unlock();
             }
         }
     }
